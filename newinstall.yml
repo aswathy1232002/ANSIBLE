@@ -1,0 +1,31 @@
+---
+- name: intall httpd and apache2
+  hosts: all
+  tasks:
+    - name: install httpd
+      yum: 
+        name: httpd
+        state: latest
+      when:  ansible_distribution == 'AlmaLinux'
+
+    - name: restart httpd
+      service:
+        name: httpd
+        enabled: true
+        state: started
+      when: ansible_distribution == 'AlmaLinux'
+
+    - name: install apache2
+      apt:
+        name: apache2
+        state: latest
+      when: ansible_distribution == 'Linux Mint'
+
+    - name: restart apache2
+      service: 
+        name: apache2
+        enabled: true
+        state: started
+      when: ansible_distribution == 'linux Mint'
+...
+
