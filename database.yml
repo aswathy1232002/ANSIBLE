@@ -1,0 +1,73 @@
+---
+- name: mariadb install and db creation
+  hosts: database
+  vars:
+    dbname: DATABASE
+    uname: aswathy
+    dbpass: hello@123
+    dbsocket: /var/lib/mysql/mysql.sock
+
+  tasks:
+    - name: mariadb installation
+      yum:
+        name: mariadb-server
+        state: latest
+      tags:
+        - install
+
+    - name: PyMySQL installation
+      tags:
+        - pymysql
+      yum:
+        name: python3-PyMySQL
+        state: latest
+
+    - name: enable mariadb
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+      tags:
+        - enable
+
+    - name: disable mariadb
+      service:
+        name: mariadb
+        state: stopped                                              
+        enabled: yes                    
+      tags:
+        - disable
+                                                                                          
+    - name: database creation
+      mysql_db:
+        name: "{{ dbname }}"
+        state: present
+        login_unix_socket: "{{ dbsocket }}"
+      tags:
+        - database
+
+    - name: database user creation
+      mysql_user:
+        name: "{{ uname }}"
+        password: "{{ dbpass }}"
+        priv: '*.*:ALL'
+        state: present
+        login_unix_socket: "{{ dbsocket }}"
+      tags:
+        - user
+
+    - name: remove database
+      mysql_db:
+        name: "{{dbname}}"
+        state: absent
+        login_unix_socket: "{{dbsocket}}"
+      tags:
+        - removedb
+
+    - name: remove dbuser
+      mysql_user:
+        name: "{{uname}}"
+        state: absent
+        login_unix_socket: "{{dbsocket}}"
+      tags:
+        - removeuser
