@@ -1,0 +1,18 @@
+---
+- name: install and restart
+  hosts: web
+  tasks:
+     - name: httpd install
+       yum: 
+          name: httpd
+          state: latest
+     - name: restart httpd
+       service:
+          name: httpd
+          enabled: true
+          state: started
+...
+
+
+
+
