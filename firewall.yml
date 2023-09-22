@@ -1,0 +1,10 @@
+---
+- name: firewall_to_httpd
+  hosts: web
+  tasks:
+    - name: Firewall setup
+      firewalld:                                                                           
+        permanent: yes
+        service: http
+        state: enabled
+...
