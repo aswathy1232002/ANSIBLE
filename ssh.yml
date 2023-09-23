@@ -1,0 +1,7 @@
+---
+- name: ssh
+  hosts: web
+  vars:
+    ip: 172.16.11.1
+    port:
+
