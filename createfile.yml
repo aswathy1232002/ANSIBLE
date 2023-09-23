@@ -1,0 +1,11 @@
+---
+- name: create a new file in opt folder
+  hosts: all
+  tasks:
+    - name: new file in opt
+      file:
+        path: /opt/aswathy.txt
+        owner: user1
+        state: touch
+        mode: '0755'
+
