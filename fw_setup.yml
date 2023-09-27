@@ -1,0 +1,27 @@
+---
+- name: firewall setup
+  hosts: web
+  tasks:
+    - name: httpd setup
+      firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+      tags:
+        - add
+
+    - name: reload firewalld
+      systemd:
+        name: firewalld
+        state: restarted 
+      tags:
+       - reload
+
+    - name: httpd remove
+      yum:
+        name: http
+        state: disabled
+      tags:
+        - remove
+... 
+
