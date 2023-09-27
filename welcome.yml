@@ -1,0 +1,10 @@
+---
+- name: print welcome message
+  hosts: all
+  tasks:
+    - name: welcome msg when ssh login
+      copy:
+        content: |
+          "welcome to your server"
+        dest: /etc/motd
+
