@@ -1,0 +1,14 @@
+---
+- name: ntp conf
+  hosts: all
+  tasks:
+    - name: ntp conf
+      template:
+        src: alma_conf
+        dest: /etc/chrony.conf
+      when: ansible_distribution == "AlmaLinux"
+    - name: ntp conf
+      template:
+        src: ntp_conf
+        dest: /etc/ntp.conf
+      when: ansible_distribution == "Linux Mint"
