@@ -1,0 +1,10 @@
+---
+- name: fact variable
+  hosts: client4
+  tasks:
+    - name: debug
+      debug:
+        var: ansible_distribution
+    - name: hostname
+      debug:
+        var: ansible_hostname
