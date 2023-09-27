@@ -1,0 +1,22 @@
+---
+- name: install and restsrt ntp
+  hosts: all
+  tasks:
+    - name: install ntp in alma
+      yum:
+        name: chrony
+        state: latest
+      when: ansible_distribution == 'AlmaLinux'
+
+    - name: install ntp in mint
+      apt:
+        name: ntp
+        state: latest
+      when: ansible_distribution == 'Linux Mint'
+
+    - name: start ntp
+      service:
+        name: "{{ 'chronyd' if ansible_distribution == 'AlmaLinux' else 'ntp' }}"
+        state: started
+        enabled: yes
+
