@@ -1,0 +1,35 @@
+---
+- name: db backup
+  hosts: web
+  vars:
+    dbname: MySql
+    dbuser: sree
+    dbpassword: password
+    dbsocket: /var/lib/mysql/mysql.sock
+    backupdir: /tmp/backup
+    backupfile: dbbackups
+    retention: 7
+
+  tasks: 
+    - name: create backup directory
+      file:
+        path: "{{ backupdir }}"
+        state: directory
+
+    - name: pymysql install
+      yum:
+        name: python3-PyMySQL 
+        state: latest
+
+    - name: automate backup
+      mysql_db:
+        name: "{{ dbname }}"
+        login_user: "{{ dbuser }}"
+        login_password: "{{ dbpassword }}"
+        state: dump
+        login_unix_socket: "{{ dbsocket }}"
+        target: "{{ backupdir }}/{{ backupfile }}.sql"
+  
+
+
+
