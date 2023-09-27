@@ -1,0 +1,22 @@
+---
+- name: create multiple users
+  hosts: web
+  vars:
+    users:
+     - uname: akhil
+     - uname: kamal
+     - uname: azwathy
+     - gname: DevOps
+     - password: "{{ 'password' | password_hash('sha512') }}"
+
+  tasks:
+    - name: create multiple users
+      user:
+        name: "{{ item.uname }}"
+        group: "{{ item.gname }}"
+        password: "{{ item.password }}"
+        state: present
+      with_items: "{{ users }}"
+      
+  
+
