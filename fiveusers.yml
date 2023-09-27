@@ -1,0 +1,16 @@
+---
+- name: create five users in each client
+  hosts: all
+  tasks:
+    - name: creating multiple user
+      user:
+        name: "{{ item }}"
+        state: present
+        groups: "{{'wheel' if ansible_distribution == 'AlmaLinux' else 'sudo' }}"
+      loop:
+        - user1
+        - user2
+        - user3
+        - user4
+        - user5
+...
