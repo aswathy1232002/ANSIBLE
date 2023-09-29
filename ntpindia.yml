@@ -6,9 +6,25 @@
       template:
         src: alma_conf
         dest: /etc/chrony.conf
+      notify:
+        - restart AlmaLinux
       when: ansible_distribution == "AlmaLinux"
+
     - name: ntp conf
       template:
         src: ntp_conf
         dest: /etc/ntp.conf
+      notify:
+        - restart Linux Mint
       when: ansible_distribution == "Linux Mint"
+
+  handlers:
+    - name: restart AlmaLinux
+      service:
+        name: chronyd
+        state: restarted
+    - name: restart Linux Mint
+      service:
+        name: ntp
+        state: restarted     
+      
